@@ -7,8 +7,10 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterViewController: UIViewController, UINavigationControllerDelegate {
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -135,14 +137,14 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         addSubview()
     }
     
-    func configColor() {
+    private func configColor() {
         //        navigationController?.setNavigationBarHidden(false, animated: true)
         //        navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.backgroundColor = .lightGray
     }
     
     
-    func addSubview () {
+    private func addSubview () {
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
         scrollView.addSubview(emailField)
@@ -199,12 +201,18 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
                   return
               }
         
+        spinner.show(in: view)
+        
         
         //Firebase Log In
         DatabaseManager.shared.userExists(with: email, completion: { [weak self] exists in
             guard let strongSelf = self else {
                 
                 return
+            }
+            
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
             }
             
             guard !exists else {
@@ -268,7 +276,7 @@ extension RegisterViewController: UITextFieldDelegate {
 }
 
 /*
- по сути позволяет нам получать результаты
+ позволяет нам получать результаты
  пользователя, делающего снимок или выбирающего
  фото из фотопленки
  */
