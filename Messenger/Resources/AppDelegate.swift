@@ -72,11 +72,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         let lastName = user.profile?.familyName
         
         DatabaseManager.shared.userExists(with: email, completion: { exists in
+            
+            let chatUser = ChatAppUser(firstName: firstName,
+                                       lastName:  lastName ?? "",
+                                       emailAddress: email)
+            
             if !exists {
                 //insert to database
-                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName,
-                                                                    lastName:  lastName ?? "",
-                                                                    emailAddress: email))
+                DatabaseManager.shared.insertUser(with: chatUser, completion:  { success in
+                    if success {
+                        // upload image
+                        if user.profile.hasImage {
+                            guard let url = user.profile.imageURL(withDimension: 200) else {
+                                return
+                            }
+                            
+                            URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
+                                guard let data = data else {
+                                    return
+                                }
+                                let fileName = chatUser.profilePictureFileName
+                                StorageManager.shared.uploadProfilePicture(with: data,
+                                                                           fileName: fileName,
+                                                                           completion: { result in
+                                    switch result {
+                                    case .success(let downloadUrl):
+                                        UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                        print(downloadUrl)
+                                    case .failure(let error):
+                                        print("Storage manager error: \(error)")
+                                    }
+                                })
+                            }).resume()
+                            
+                            
+                        }
+                        
+                        
+                    }
+                })
             }
         })
         

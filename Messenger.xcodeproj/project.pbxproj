@@ -10,6 +10,7 @@
 		D74F363BBD640AB6CE33B6C4 /* Pods_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26742B1079A6C658E5A3C0E /* Pods_Messenger.framework */; };
 		DF06A50127259B6D006A204C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF06A50027259B6D006A204C /* Extensions.swift */; };
 		DF28E69327295067000DC269 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF28E69227295067000DC269 /* DatabaseManager.swift */; };
+		DF3BCBA527317003002B4E7F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3BCBA427317003002B4E7F /* StorageManager.swift */; };
 		DFB8E2FD2725747600AF3834 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB8E2FC2725747600AF3834 /* LoginViewController.swift */; };
 		DFB8E2FF2725748D00AF3834 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB8E2FE2725748D00AF3834 /* RegisterViewController.swift */; };
 		DFB8E301272574C800AF3834 /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB8E300272574C800AF3834 /* PhotoViewerViewController.swift */; };
@@ -32,6 +33,7 @@
 		C26742B1079A6C658E5A3C0E /* Pods_Messenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF06A50027259B6D006A204C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DF28E69227295067000DC269 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		DF3BCBA427317003002B4E7F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		DFB8E2FC2725747600AF3834 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DFB8E2FE2725748D00AF3834 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DFB8E300272574C800AF3834 /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				DFF6CEA8272156C8007C394B /* SceneDelegate.swift */,
 				DF06A50027259B6D006A204C /* Extensions.swift */,
 				DF28E69227295067000DC269 /* DatabaseManager.swift */,
+				DF3BCBA427317003002B4E7F /* StorageManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				DFF6CEA9272156C8007C394B /* SceneDelegate.swift in Sources */,
 				DFEEB1E627305430003FAED6 /* ChatViewController.swift in Sources */,
 				DFB8E301272574C800AF3834 /* PhotoViewerViewController.swift in Sources */,
+				DF3BCBA527317003002B4E7F /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
