@@ -43,6 +43,14 @@
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
 	</array>
+    <key>LSRequiresIPhoneOS</key>
+        <true/>
+        <key>NSCameraUsageDescription</key>
+        <string>Please allow access to take a profile picture</string>
+        <key>NSPhotoLibraryAddUsageDescription</key>
+        <string>Please allow access to select a photo for your profile.</string>
+        <key>NSMicrophoneUsageDescription</key>
+        <string>Please allow access to send audio and video messages.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -62,5 +70,22 @@
 			</array>
 		</dict>
 	</dict>
+    <key>UILaunchStoryboardName</key>
+        <string>LaunchScreen</string>
+        <key>UIMainStoryboardFile</key>
+        <string>Main</string>
+        <key>UIRequiredDeviceCapabilities</key>
+        <array>
+            <string>armv7</string>
+        </array>
+        <key>UISupportedInterfaceOrientations</key>
+        <array>
+            <string>UIInterfaceOrientationPortrait</string>
+        </array>
+        <key>UISupportedInterfaceOrientations~ipad</key>
+        <array>
+            <string>UIInterfaceOrientationPortrait</string>
+            <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        </array>
 </dict>
 </plist>
