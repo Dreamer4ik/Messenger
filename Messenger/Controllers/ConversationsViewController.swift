@@ -46,6 +46,8 @@ class ConversationsViewController: UIViewController {
         return label
     }()
     
+    private var loginObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -58,6 +60,15 @@ class ConversationsViewController: UIViewController {
         setUpTableView()
         fetchConversations()
         startListeningForConversations()
+        
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.startListeningForConversations()
+        })
+        
     }
     
    private func addSubView() {
@@ -74,6 +85,11 @@ class ConversationsViewController: UIViewController {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return
         }
+        
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        
         print("starting conversation fetch...")
         
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
@@ -183,5 +199,25 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         return 120
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+           return .delete
+       }
+
+       func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+           if editingStyle == .delete {
+               // begin delete
+               let conversationId = conversations[indexPath.row].id
+               tableView.beginUpdates()
+               
+               DatabaseManager.shared.deleteConversation(conversationId: conversationId, completion: {[weak self] success in
+                   if success {
+                       self?.conversations.remove(at: indexPath.row)
+                       tableView.deleteRows(at: [indexPath], with: .left)
+                   }
+               })
+
+               tableView.endUpdates()
+           }
+       }
 }
 
