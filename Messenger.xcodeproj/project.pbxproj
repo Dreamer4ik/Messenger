@@ -19,6 +19,7 @@
 		DFB8E3052725753500AF3834 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB8E3042725753500AF3834 /* NewConversationViewController.swift */; };
 		DFB8E3072725755300AF3834 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB8E3062725755300AF3834 /* ProfileViewController.swift */; };
 		DFC320FB272835620002A901 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DFC320FA272835620002A901 /* GoogleService-Info.plist */; };
+		DFCC8D17275E62F100E7753F /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCC8D16275E62F100E7753F /* LocationPickerViewController.swift */; };
 		DFEEB1E627305430003FAED6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEEB1E527305430003FAED6 /* ChatViewController.swift */; };
 		DFF008B3274262300029CAB7 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF008B2274262300029CAB7 /* ConversationTableViewCell.swift */; };
 		DFF6CEA7272156C8007C394B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF6CEA6272156C8007C394B /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 		DFB8E3042725753500AF3834 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		DFB8E3062725755300AF3834 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DFC320FA272835620002A901 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DFCC8D16275E62F100E7753F /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
 		DFEEB1E527305430003FAED6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		DFF008B2274262300029CAB7 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		DFF6CEA3272156C8007C394B /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +97,7 @@
 				DFB8E3042725753500AF3834 /* NewConversationViewController.swift */,
 				DFB8E3062725755300AF3834 /* ProfileViewController.swift */,
 				DFEEB1E527305430003FAED6 /* ChatViewController.swift */,
+				DFCC8D16275E62F100E7753F /* LocationPickerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				DFEEB1E627305430003FAED6 /* ChatViewController.swift in Sources */,
 				DFB8E301272574C800AF3834 /* PhotoViewerViewController.swift in Sources */,
 				DF3BCBA527317003002B4E7F /* StorageManager.swift in Sources */,
+				DFCC8D17275E62F100E7753F /* LocationPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

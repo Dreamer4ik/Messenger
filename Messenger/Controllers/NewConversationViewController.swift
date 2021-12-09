@@ -21,6 +21,7 @@ class NewConversationViewController: UIViewController {
     private let searchBar:UISearchBar = {
         let bar = UISearchBar()
         bar.placeholder = "Search for users..."
+        bar.backgroundColor = .systemBackground
         return bar
     }()
     
@@ -50,7 +51,7 @@ class NewConversationViewController: UIViewController {
         tableView.dataSource = self
         
         searchBar.delegate = self
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.topItem?.titleView = searchBar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .done

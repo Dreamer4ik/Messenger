@@ -177,6 +177,7 @@ class ConversationsViewController: UIViewController {
         
         
         validateAuth()
+        tabBarController?.tabBar.backgroundColor = .secondarySystemBackground
         
     }
     
