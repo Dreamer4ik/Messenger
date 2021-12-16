@@ -117,7 +117,6 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
         
         view.backgroundColor = .systemBackground
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .done, target: self, action: #selector(didTapRegister))
         
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         
@@ -138,9 +137,10 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
     }
     
     private func configColor() {
-        //        navigationController?.setNavigationBarHidden(false, animated: true)
-        //        navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.backgroundColor = .secondarySystemBackground
+        let barAppearance = UINavigationBarAppearance()
+            barAppearance.backgroundColor = .secondarySystemBackground
+            navigationItem.standardAppearance = barAppearance
+            navigationItem.scrollEdgeAppearance = barAppearance
     }
     
     
@@ -278,13 +278,6 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
         
     }
     
-    @objc private func didTapRegister() {
-        let vc = RegisterViewController()
-        vc.title = "Create Account"
-        navigationController?.pushViewController(vc, animated: true)
-        
-        
-    }
     
     
 }
@@ -307,7 +300,7 @@ extension RegisterViewController: UITextFieldDelegate {
 /*
  позволяет нам получать результаты
  пользователя, делающего снимок или выбирающего
- фото из фотопленки
+ фото из галереи
  */
 extension RegisterViewController: UIImagePickerControllerDelegate {
     

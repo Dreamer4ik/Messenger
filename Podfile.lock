@@ -98,8 +98,8 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleSignIn (5.0.2):
-    - AppAuth (~> 1.2)
+  - GoogleSignIn (6.0.2):
+    - AppAuth (~> 1.4)
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleUtilities/AppDelegateSwizzler (7.5.0):
@@ -155,7 +155,7 @@ DEPENDENCIES:
   - Firebase/Crashlytics
   - Firebase/Database
   - Firebase/Storage
-  - GoogleSignIn (= 5.0.2)
+  - GoogleSignIn
   - InputBarAccessoryView
   - JGProgressHUD
   - MessageKit
@@ -211,7 +211,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: e6065bcbf70e2a06a8c3ddc66cbe03a395bbddc4
   GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
-  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
@@ -225,6 +225,6 @@ SPEC CHECKSUMS:
   RealmSwift: fe2f33d731f47aaf4c3618930f9f7cf7b935c33f
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
 
-PODFILE CHECKSUM: 3d093ccb33def0a39c9488c45ce44b51cde1fe3e
+PODFILE CHECKSUM: 1e41ce14985d8ab1951418228fd4b9c7b07a35a6
 
 COCOAPODS: 1.11.2

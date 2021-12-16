@@ -57,7 +57,12 @@ final class LocationPickerViewController: UIViewController {
         }
         addSubviews()
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.backgroundColor = .systemBackground
+        
+        let barAppearance = UINavigationBarAppearance()
+            barAppearance.backgroundColor = .systemBackground
+            navigationItem.standardAppearance = barAppearance
+            navigationItem.scrollEdgeAppearance = barAppearance
+        
   
     }
     

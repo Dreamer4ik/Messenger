@@ -17,7 +17,7 @@ pod 'Firebase/Crashlytics'
 pod 'FBSDKLoginKit'
 
 #Google Sign IN
-pod 'GoogleSignIn', '5.0.2'
+pod 'GoogleSignIn'
 
 pod 'MessageKit'
 pod 'JGProgressHUD'

@@ -102,7 +102,6 @@ final class LoginViewController: UIViewController {
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
         
-        GIDSignIn.sharedInstance()?.presentingViewController = self
         
         title = "Log in"
         
@@ -110,7 +109,11 @@ final class LoginViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .done, target: self, action: #selector(didTapRegister))
         
-        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        loginButton.addTarget(
+                  self,
+                  action: #selector(loginButtonTapped),
+                  for: .touchUpInside
+              )
         
         emailField.delegate = self
         passwordField.delegate = self
@@ -121,9 +124,10 @@ final class LoginViewController: UIViewController {
     }
     
     private func configColor() {
-        //        navigationController?.setNavigationBarHidden(false, animated: true)
-        //        navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.backgroundColor = .secondarySystemBackground
+        let barAppearance = UINavigationBarAppearance()
+            barAppearance.backgroundColor = .secondarySystemBackground
+            navigationItem.standardAppearance = barAppearance
+            navigationItem.scrollEdgeAppearance = barAppearance
     }
     
     
@@ -135,6 +139,7 @@ final class LoginViewController: UIViewController {
         scrollView.addSubview(loginButton)
         scrollView.addSubview(facebookLoginButton)
         scrollView.addSubview(googleLoginButton)
+        googleLoginButton.addTarget(self, action: #selector(googleSignInButtonTapped), for: .touchUpInside)
         
     }
     
@@ -147,22 +152,52 @@ final class LoginViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
+        
         let size = scrollView.width/3
-        imageView.frame = CGRect(x: (scrollView.width - size)/2, y: view.top + 60, width: size, height: size)
+        imageView.frame = CGRect(x: (scrollView.width - size)/2,
+                                 y: 100,
+                                 width: size,
+                                 height: size)
         
-        emailField.frame = CGRect(x: 30, y: imageView.bottom + 10, width: scrollView.width - 60, height: 52)
+        emailField.frame = CGRect(x: 30,
+                                  y: imageView.bottom + 10,
+                                  width: scrollView.width - 60,
+                                  height: 52)
         
-        passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: scrollView.width - 60, height: 52)
+        passwordField.frame = CGRect(x: 30,
+                                     y: emailField.bottom + 10,
+                                     width: scrollView.width - 60,
+                                     height: 52)
         
-        loginButton.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: scrollView.width - 60, height: 52)
+        loginButton.frame = CGRect(x: 30,
+                                   y: passwordField.bottom + 10,
+                                   width: scrollView.width - 60,
+                                   height: 52)
         
-        facebookLoginButton.frame = CGRect(x: 30, y: loginButton.bottom + 10, width: scrollView.width - 60, height: 52)
+        facebookLoginButton.frame = CGRect(x: 30,
+                                           y: loginButton.bottom + 10,
+                                           width: scrollView.width - 60,
+                                           height: 52)
         
         
         
-        googleLoginButton.frame = CGRect(x: 30, y: facebookLoginButton.bottom + 10, width: scrollView.width - 60, height: 52)
+        googleLoginButton.frame = CGRect(x: 30,
+                                         y: facebookLoginButton.bottom + 10,
+                                         width: scrollView.width - 60,
+                                         height: 52)
         
     }
+    
+    @objc private func googleSignInButtonTapped() {
+          guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                let signInConfig = appDelegate.signInConfig else {
+              return
+          }
+          GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+              guard let user = user, error == nil else { return }
+              appDelegate.handleSessionRestore(user: user)
+          }
+      }
     
     
     @objc private func loginButtonTapped() {

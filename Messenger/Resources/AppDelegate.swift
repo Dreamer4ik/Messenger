@@ -12,7 +12,7 @@ import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
-    
+    public var signInConfig: GIDConfiguration?
     
     
     func application(
@@ -27,8 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             didFinishLaunchingWithOptions: launchOptions
         )
         
-        GIDSignIn.sharedInstance()?.clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance()?.delegate = self
+        GIDSignIn.sharedInstance.restorePreviousSignIn { [weak self] user, error in
+            if let user = user, error == nil {
+                self?.handleSessionRestore(user: user)
+            }
+        }
+        
+        if let clientId = FirebaseApp.app()?.options.clientID {
+            signInConfig = GIDConfiguration.init(clientID: clientId)
+        }
         
         
         return true
@@ -40,57 +47,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]
     ) -> Bool {
         
-        ApplicationDelegate.shared.application(
-            app,
-            open: url,
-            sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-            annotation: options[UIApplication.OpenURLOptionsKey.annotation]
-        )
-        return GIDSignIn.sharedInstance().handle(url)
+        var handled: Bool
+        handled = GIDSignIn.sharedInstance.handle(url)
+        if handled {
+            return true
+        }
+        return false
     }
-   
-}
-
-//MARK: - GIDSignInDelegate
-extension AppDelegate: GIDSignInDelegate {
     
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        guard error == nil else {
-            if let error = error {
-                print("Failed to sign in with Google: \(error)")
-            }
-            return
-        }
-        guard let user = user else {
-            return
-        }
+    func handleSessionRestore(user: GIDGoogleUser) {
+        guard let email = user.profile?.email,
+              let firstName = user.profile?.givenName else {
+                  return
+              }
         
-        print("Did sign in with Google: \(user)")
-        
-        guard let email  = user.profile.email,
-              let firstName = user.profile.givenName
-        else {
-            return
-        }
         let lastName = user.profile?.familyName
         
-        
         UserDefaults.standard.set(email, forKey: "email")
-        UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
+        UserDefaults.standard.set("\(firstName) \(lastName ?? "")", forKey: "name")
         
         DatabaseManager.shared.userExists(with: email, completion: { exists in
-            
-            let chatUser = ChatAppUser(firstName: firstName,
-                                       lastName:  lastName ?? "",
-                                       emailAddress: email)
-            
             if !exists {
-                //insert to database
-                DatabaseManager.shared.insertUser(with: chatUser, completion:  { success in
+                // insert to database
+                let chatUser = ChatAppUser(
+                    firstName: firstName,
+                    lastName: lastName ?? "" ,
+                    emailAddress: email
+                )
+                DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
                     if success {
                         // upload image
-                        if user.profile.hasImage {
-                            guard let url = user.profile.imageURL(withDimension: 200) else {
+                        if user.profile?.hasImage == true {
+                            guard let url = user.profile?.imageURL(withDimension: 200) else {
                                 return
                             }
                             
@@ -98,54 +86,42 @@ extension AppDelegate: GIDSignInDelegate {
                                 guard let data = data else {
                                     return
                                 }
-                                let fileName = chatUser.profilePictureFileName
-                                StorageManager.shared.uploadProfilePicture(with: data,
-                                                                           fileName: fileName,
-                                                                           completion: { result in
+                                
+                                let filename = chatUser.profilePictureFileName
+                                StorageManager.shared.uploadProfilePicture(with: data, fileName: filename, completion: { result in
                                     switch result {
                                     case .success(let downloadUrl):
                                         UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
                                         print(downloadUrl)
                                     case .failure(let error):
-                                        print("Storage manager error: \(error)")
+                                        print("Storage maanger error: \(error)")
                                     }
                                 })
                             }).resume()
-                            
-                            
                         }
-                        
-                        
                     }
                 })
             }
         })
         
-        guard
-            let authentication = user.authentication,
-            let idToken = authentication.idToken
-        else {
-            print("Missing auth object off of google user")
+        let authentication = user.authentication
+        guard let idToken = authentication.idToken else {
             return
         }
         
-        let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                       accessToken: authentication.accessToken)
+        let credential = GoogleAuthProvider.credential(
+            withIDToken: idToken,
+            accessToken: authentication.accessToken
+        )
         
         FirebaseAuth.Auth.auth().signIn(with: credential, completion: { authResult, error in
             guard authResult != nil, error == nil else {
-                print("Failed to log in with google credential")
+                print("failed to log in with google credential")
                 return
             }
             
-            print("Succesfully signed in with google credential")
+            print("Successfully signed in with Google cred.")
             NotificationCenter.default.post(name: .didLogInNotification, object: nil)
         })
-        
     }
-    
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        print("Google user was disconnected")
-    }
-    
 }
